@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Bars3 from "../icons/bars3";
 import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -12,12 +13,15 @@ export default function Dashboard() {
       >
         <Navbar />
       </div>
-      <div className={`${isOpen ? "w-5/6" : "w-full"}`}>
-        {/* <div className={"w-full"}> */}
+      <div
+        className={`${isOpen ? "w-5/6" : "w-full"}`}
+        style={{ transition: "width 0.3s" }}
+      >
         <div className="w-full h-[8vh] bg-sky-700 flex p-4 items-center gap-x-3">
           <Bars3 onClick={() => setIsOpen((prev) => !prev)} />
           <span className="font-bold text-xl text-white">Dawala</span>
         </div>
+        <Outlet />
       </div>
     </div>
   );
