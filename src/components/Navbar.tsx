@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ArrowLeft from "../icons/ArrowLeft";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -11,19 +12,16 @@ export default function Navbar() {
         </span>
       </div>
 
-      <div className="bg-black border-y border-stone-700 p-1 flex justify-between px-2 items-center cursor-pointer">
-        <span className="">Home</span>
-      </div>
+      <Link
+        to={"/"}
+        className="hover:text-sky-600 hover:bg-slate-800 bg-black border-y border-stone-700 p-1 flex justify-between px-2 items-center cursor-pointer"
+      >
+        Home
+      </Link>
 
-      <NavigationGroup name="Category">
-        <span>Tambah</span>
-        <span>Edit</span>
-        <span>Hapus</span>
-      </NavigationGroup>
-      <NavigationGroup name="Customer">
-        <span>Tambah</span>
-        <span>Edit</span>
-        <span>Hapus</span>
+      <NavigationGroup height="h-14" name="Category">
+        <Link to={"/category"}>Lihat</Link>
+        <Link to={"/category/tambah"}>Tambah</Link>
       </NavigationGroup>
     </nav>
   );
@@ -31,8 +29,10 @@ export default function Navbar() {
 
 function NavigationGroup({
   name,
+  height,
   children,
 }: {
+  height: string;
   name: string;
   children?: React.ReactNode;
 }) {
@@ -43,7 +43,7 @@ function NavigationGroup({
       {" "}
       <div
         onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-black border-y border-stone-700 p-1 flex justify-between px-2 items-center cursor-pointer"
+        className="hover:text-sky-600 hover:bg-slate-800 bg-black border-y border-stone-700 p-1 flex justify-between px-2 items-center cursor-pointer"
       >
         <span className="">{name}</span>
         <ArrowLeft isRotate={isOpen} />
@@ -51,19 +51,10 @@ function NavigationGroup({
       <div
         style={{ transition: "height 0.3s linear" }}
         className={`flex flex-col font-quicksand px-4 overflow-hidden ${
-          isOpen ? "h-20 py-1" : "h-0 py-0"
+          isOpen ? `${height} py-1` : "h-0 py-0"
         }`}
       >
         {children}
-        {/* <span className="cursor-pointer hover:text-sky-600 transition-colors">
-          Tambah
-        </span>
-        <span className="cursor-pointer hover:text-sky-600 transition-colors">
-          Edit
-        </span>
-        <span className="cursor-pointer hover:text-sky-600 transition-colors">
-          Hapus
-        </span> */}
       </div>
     </>
   );
