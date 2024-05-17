@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import LihatCategory from "./pages/category/Lihat";
 import TambahCategory from "./pages/category/Tambah";
 import ContainerCategory from "./pages/category/Container";
+import EditCategory from "./pages/category/Edit";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path="category" element={<ContainerCategory />}>
         <Route index element={<LihatCategory />} />
         <Route path="tambah" element={<TambahCategory />} />
+        <Route path="edit" element={<EditCategory />} />
       </Route>
     </Route>
   )
