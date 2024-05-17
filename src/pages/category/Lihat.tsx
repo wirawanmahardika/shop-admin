@@ -4,25 +4,30 @@ export default function LihatCategory() {
       <span className="col-span-3 font-bold text-5xl text-center">
         Categories
       </span>
-      <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
-        <img className="max-w-[66%]" src="/img/baju.png" alt="baju" />
-        <span className="font-bold text-4xl text-center">Baju</span>
-      </div>
-      <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
-        <img className="max-w-[66%]" src="/img/shoes3.png" alt="sepatu" />
-        <span className="font-bold text-4xl text-center">Sepatu</span>
-      </div>
-      <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
-        <img className="max-w-[66%]" src="/img/kalung.png" alt="kalung" />
-        <span className="font-bold text-4xl text-center">Kalung</span>
-      </div>
-      <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
-        <img className="max-w-[66%]" src="/img/gelang.png" alt="gelang" />
-        <span className="font-bold text-4xl text-center">Gelang</span>
-      </div>
-      <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
-        <img className="max-w-[66%]" src="/img/celana.png" alt="celana" />
-        <span className="font-bold text-4xl text-center">Celana</span>
+      <Category nama="Baju" src="/img/baju.png" id={1} />
+      <Category nama="Sepatu" src="/img/shoes3.png" id={2} />
+      <Category nama="Kalung" src="/img/kalung.png" id={3} />
+      <Category nama="Gelang" src="/img/gelang.png" id={4} />
+      <Category nama="Celana" src="/img/celana.png" id={5} />
+    </div>
+  );
+}
+
+function Category({
+  src,
+  nama,
+  id,
+}: {
+  src: string;
+  nama: string;
+  id: number;
+}) {
+  return (
+    <div className="p-5 flex flex-col gap-y-5 items-center border-2 border-black rounded-lg shadow-lg h-full justify-end">
+      <img className="max-w-[66%]" src={src} alt={nama} />
+      <div className="flex flex-col ">
+        <span className="font-bold text-4xl text-center">{nama}</span>
+        <span className="text-lg text-center text-gray-600">ID : {id}</span>
       </div>
     </div>
   );
