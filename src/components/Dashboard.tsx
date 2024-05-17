@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <div className="w-full h-screen flex font-geologica">
+    <div className="w-full h-screen flex font-geologica overflow-hidden">
       <div
         className={`overflow-hidden bg-stone-900 ${isOpen ? "w-1/6" : "w-0"}`}
         style={{ transition: "width 0.3s" }}
@@ -14,7 +14,7 @@ export default function Dashboard() {
         <Navbar />
       </div>
       <div
-        className={`${isOpen ? "w-5/6" : "w-full"}`}
+        className={`overflow-y-auto ${isOpen ? "w-5/6" : "w-full"}`}
         style={{ transition: "width 0.3s" }}
       >
         <div className="w-full h-[8vh] bg-sky-700 flex p-4 items-center gap-x-3">
