@@ -14,6 +14,10 @@ import ContainerBrand from "./pages/brand/Container";
 import LihatBrand from "./pages/brand/Lihat";
 import TambahBrand from "./pages/brand/Tambah";
 import EditBrand from "./pages/brand/Edit";
+import ContainerItem from "./pages/item/Container";
+import LihatItems from "./pages/item/Lihat";
+import TambahItem from "./pages/item/Tambah";
+import EditItem from "./pages/item/Edit";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +32,11 @@ const router = createBrowserRouter(
         <Route index element={<LihatBrand />} />
         <Route path="tambah" element={<TambahBrand />} />
         <Route path="edit" element={<EditBrand />} />
+      </Route>
+      <Route path="item" element={<ContainerItem />}>
+        <Route index element={<LihatItems />} />
+        <Route path="tambah" element={<TambahItem />} />
+        <Route path="edit" element={<EditItem />} />
       </Route>
     </Route>
   )
