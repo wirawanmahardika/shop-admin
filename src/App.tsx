@@ -10,6 +10,10 @@ import LihatCategory from "./pages/category/Lihat";
 import TambahCategory from "./pages/category/Tambah";
 import ContainerCategory from "./pages/category/Container";
 import EditCategory from "./pages/category/Edit";
+import ContainerBrand from "./pages/brand/Container";
+import LihatBrand from "./pages/brand/Lihat";
+import TambahBrand from "./pages/brand/Tambah";
+import EditBrand from "./pages/brand/Edit";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +23,11 @@ const router = createBrowserRouter(
         <Route index element={<LihatCategory />} />
         <Route path="tambah" element={<TambahCategory />} />
         <Route path="edit" element={<EditCategory />} />
+      </Route>
+      <Route path="brand" element={<ContainerBrand />}>
+        <Route index element={<LihatBrand />} />
+        <Route path="tambah" element={<TambahBrand />} />
+        <Route path="edit" element={<EditBrand />} />
       </Route>
     </Route>
   )
