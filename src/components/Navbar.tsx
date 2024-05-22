@@ -19,6 +19,11 @@ export default function Navbar() {
         Home
       </Link>
 
+      <NavigationGroup height="h-14" name="Customer">
+        <Link to={"/customer"}>Lihat</Link>
+        <Link to={"/customer/edit"}>Edit</Link>
+      </NavigationGroup>
+
       <NavigationGroup height="h-20" name="Category">
         <Link to={"/category"}>Lihat</Link>
         <Link to={"/category/tambah"}>Tambah</Link>
