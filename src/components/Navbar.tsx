@@ -19,6 +19,13 @@ export default function Navbar() {
         Home
       </Link>
 
+      <Link
+        to={"/order"}
+        className="hover:text-sky-600 hover:bg-slate-800 bg-black border-y border-stone-700 p-1 flex justify-between px-2 items-center cursor-pointer"
+      >
+        Order
+      </Link>
+
       <NavigationGroup height="h-14" name="Customer">
         <Link to={"/customer"}>Lihat</Link>
         <Link to={"/customer/edit"}>Edit</Link>

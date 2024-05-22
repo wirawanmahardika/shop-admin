@@ -21,6 +21,7 @@ import EditItem from "./pages/item/Edit";
 import ContainerCustomer from "./pages/customer/Container";
 import LihatCustomer from "./pages/customer/Lihat";
 import EditCustomer from "./pages/customer/Edit";
+import ContainerOrder from "./pages/order/Container";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
         <Route index element={<LihatCustomer />} />
         <Route path="edit" element={<EditCustomer />} />
       </Route>
+      <Route path="order" element={<ContainerOrder />}></Route>
     </Route>
   )
 );
