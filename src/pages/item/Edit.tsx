@@ -32,6 +32,42 @@ export default function EditItem() {
             className="w-full outline-none border-2 border-black rounded py-1"
           />
         </div>
+        <div className="flex flex-col w-full ">
+          <label htmlFor="id_category" className="text-xl">
+            Brand
+          </label>
+          <input
+            type="text"
+            className="w-full outline-none border-2 border-black rounded py-1"
+          />
+        </div>
+        <div className="flex flex-col w-full ">
+          <label htmlFor="id_category" className="text-xl">
+            Category
+          </label>
+          <input
+            type="text"
+            className="w-full outline-none border-2 border-black rounded py-1"
+          />
+        </div>
+        <div className="flex flex-col w-full ">
+          <label htmlFor="id_category" className="text-xl">
+            Price
+          </label>
+          <input
+            type="text"
+            className="w-full outline-none border-2 border-black rounded py-1"
+          />
+        </div>
+        <div className="flex flex-col w-full ">
+          <label htmlFor="id_category" className="text-xl">
+            Stock
+          </label>
+          <input
+            type="text"
+            className="w-full outline-none border-2 border-black rounded py-1"
+          />
+        </div>
         <button className="px-8 py-1 rounded bg-sky-600">Submit</button>
       </Form>
     </div>
