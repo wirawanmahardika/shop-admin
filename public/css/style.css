@@ -849,6 +849,10 @@ select {
   max-width: 66%;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .table-auto {
   table-layout: auto;
 }
