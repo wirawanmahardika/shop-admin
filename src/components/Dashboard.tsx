@@ -2,9 +2,11 @@ import { useState } from "react";
 import Bars3 from "../icons/bars3";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
+import useGetUser from "../hooks/useGetUser";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const user = useGetUser();
 
   return (
     <div className="w-full h-screen flex font-geologica overflow-hidden">
@@ -22,7 +24,7 @@ export default function Dashboard() {
           <Bars3 onClick={() => setIsOpen((prev) => !prev)} />
           <span className="font-bold text-xl text-white">Dawala</span>
         </div>
-        <Outlet />
+        <Outlet context={user} />
       </div>
     </div>
   );

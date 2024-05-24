@@ -3,10 +3,12 @@ import {
   NavLink,
   ActionFunctionArgs,
   useActionData,
+  useLocation,
 } from "react-router-dom";
 import { myAxios } from "../helper/axios";
 
 export default function Login() {
+  const { state } = useLocation();
   const loginData = useActionData() as {
     status: number;
     message: string;
@@ -32,11 +34,10 @@ export default function Login() {
               </p>
             </div>
           ) : (
-            loginData &&
-            loginData?.status === 403 && (
+            ((loginData && loginData?.status === 403) || state) && (
               <div className="flex items-center justify-center w-full py-3 bg-red-300 rounded-md shadow-md mt-4">
-                <p className="text-center font-semibold text-sm text-red-800 5">
-                  {loginData.message}
+                <p className="text-center font-semibold text-sm text-red-800 capitalize">
+                  {loginData?.message || state}
                 </p>
               </div>
             )
