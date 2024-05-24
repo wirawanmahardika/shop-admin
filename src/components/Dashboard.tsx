@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 
 export default function Dashboard() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <div className="w-full h-screen flex font-geologica overflow-hidden">
       <div

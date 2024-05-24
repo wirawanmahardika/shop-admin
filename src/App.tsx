@@ -22,32 +22,36 @@ import ContainerCustomer from "./pages/customer/Container";
 import LihatCustomer from "./pages/customer/Lihat";
 import EditCustomer from "./pages/customer/Edit";
 import ContainerOrder from "./pages/order/Container";
+import Login, { loginAction } from "./pages/Login";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Dashboard />}>
-      <Route index element={<Home />} />
-      <Route path="category" element={<ContainerCategory />}>
-        <Route index element={<LihatCategory />} />
-        <Route path="tambah" element={<TambahCategory />} />
-        <Route path="edit" element={<EditCategory />} />
+    <>
+      <Route path="login" element={<Login />} action={loginAction} />
+      <Route path="/" element={<Dashboard />}>
+        <Route index element={<Home />} />
+        <Route path="category" element={<ContainerCategory />}>
+          <Route index element={<LihatCategory />} />
+          <Route path="tambah" element={<TambahCategory />} />
+          <Route path="edit" element={<EditCategory />} />
+        </Route>
+        <Route path="brand" element={<ContainerBrand />}>
+          <Route index element={<LihatBrand />} />
+          <Route path="tambah" element={<TambahBrand />} />
+          <Route path="edit" element={<EditBrand />} />
+        </Route>
+        <Route path="item" element={<ContainerItem />}>
+          <Route index element={<LihatItems />} />
+          <Route path="tambah" element={<TambahItem />} />
+          <Route path="edit" element={<EditItem />} />
+        </Route>
+        <Route path="customer" element={<ContainerCustomer />}>
+          <Route index element={<LihatCustomer />} />
+          <Route path="edit" element={<EditCustomer />} />
+        </Route>
+        <Route path="order" element={<ContainerOrder />}></Route>
       </Route>
-      <Route path="brand" element={<ContainerBrand />}>
-        <Route index element={<LihatBrand />} />
-        <Route path="tambah" element={<TambahBrand />} />
-        <Route path="edit" element={<EditBrand />} />
-      </Route>
-      <Route path="item" element={<ContainerItem />}>
-        <Route index element={<LihatItems />} />
-        <Route path="tambah" element={<TambahItem />} />
-        <Route path="edit" element={<EditItem />} />
-      </Route>
-      <Route path="customer" element={<ContainerCustomer />}>
-        <Route index element={<LihatCustomer />} />
-        <Route path="edit" element={<EditCustomer />} />
-      </Route>
-      <Route path="order" element={<ContainerOrder />}></Route>
-    </Route>
+    </>
   )
 );
 
