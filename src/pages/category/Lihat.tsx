@@ -1,14 +1,25 @@
+import useFetchGet from "../../hooks/useFetchGet";
+
 export default function LihatCategory() {
+  const category = useFetchGet("/api/category");
+
   return (
     <div className="w-full p-5 grid grid-cols-3 gap-5 overflow-y-auto ">
       <span className="col-span-3 font-bold text-5xl text-center">
         Categories
       </span>
-      <Category nama="Baju" src="/img/baju.png" id={1} />
-      <Category nama="Sepatu" src="/img/shoes3.png" id={2} />
-      <Category nama="Kalung" src="/img/kalung.png" id={3} />
-      <Category nama="Gelang" src="/img/gelang.png" id={4} />
-      <Category nama="Celana" src="/img/celana.png" id={5} />
+
+      {category &&
+        category.map((c) => {
+          return (
+            <Category
+              key={c.id_category}
+              nama={c.category}
+              src={c.category_photo}
+              id={c.id_category}
+            />
+          );
+        })}
     </div>
   );
 }
