@@ -1,3 +1,4 @@
+import numberWithDot from "../../helper/numberWithCommas";
 import useFetchGet from "../../hooks/useFetchGet";
 
 export default function LihatItems() {
@@ -56,7 +57,9 @@ function Item({
           <span className="text-sm">ID : {id}</span>
           <span className="text-sm">Category : {category}</span>
           <span className="text-sm">Stock : {stock}</span>
-          <span className="text-sm">Price : Rp {price}</span>
+          <span className="text-sm">
+            Price : Rp {numberWithDot(Number(price))}
+          </span>
         </div>
       </div>
     </div>

@@ -3,10 +3,10 @@ import useFetchGet from "../../hooks/useFetchGet";
 import dayjs from "dayjs";
 import { myAxios } from "../../helper/axios";
 import { useNavigate } from "react-router-dom";
+import numberWithDot from "../../helper/numberWithCommas";
 
 export default function ContainerOrder() {
   const [orderState, dispatch] = useReducer(orderReducer, { id_penjualan: 0 });
-  // const [idPenjualanForDetail, setIdPenjualanForDetail] = useState<number>(0);
   const [detailItemTerjual, setDetailItemTerjual] = useState<any>();
   const [statusVisibility, setStatusVisibility] = useState(false);
   const [detailVisibility, setDetailVisibility] = useState(false);
@@ -28,7 +28,9 @@ export default function ContainerOrder() {
             {dayjs(d.tanggal_beli).format("HH:mm DD-MM-YY")}
           </td>
           <td className="border-2 border-black text-center p-1">{d.status}</td>
-          <td className="border-2 border-black text-center p-1">Rp {price}</td>
+          <td className="border-2 border-black text-center p-1">
+            Rp {numberWithDot(price)}
+          </td>
           <td className="border-2 border-black p-1">
             <div className="flex justify-around">
               <button className="px-2 py-0.5 font-normal bg-red-500">
@@ -208,7 +210,9 @@ function DetailComp({
           <span className="font-bold text-xl">
             {i.name} (x{i.quantity})
           </span>
-          <span className="text-center font-bold">Rp {i.price}</span>
+          <span className="text-center font-bold">
+            Rp {numberWithDot(i.price)}
+          </span>
         </div>
       </div>
     );
