@@ -1,8 +1,48 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import useFetchGet from "../../hooks/useFetchGet";
+import dayjs from "dayjs";
 
 export default function ContainerOrder() {
   const [statusVisibility, setStatusVisibility] = useState(false);
   const [detailVisibility, setDetailVisibility] = useState(false);
+  const delivers = useFetchGet("/api/penjualan");
+
+  const displayDelivers =
+    delivers &&
+    delivers.map((d, i) => {
+      const price = d.item_terjual.reduce((a: any, b: any) => a + b.price, 0);
+
+      return (
+        <tr key={d.id_penjualan}>
+          <td className="border-2 border-black text-center p-1">{i + 1}</td>
+          <td className="border-2 border-black text-center p-1">
+            {d.users.username}
+          </td>
+          <td className="border-2 border-black text-center p-1">
+            {dayjs(d.tanggal_beli).format("HH:mm DD-MM-YY")}
+          </td>
+          <td className="border-2 border-black text-center p-1">{d.status}</td>
+          <td className="border-2 border-black text-center p-1">Rp {price}</td>
+          <td className="border-2 border-black p-1">
+            <div className="flex justify-around">
+              <button className="px-2 py-0.5 bg-red-500 rounded">Hapus</button>
+              <button
+                onClick={() => setStatusVisibility((prev) => !prev)}
+                className="px-2 py-0.5 bg-emerald-500 rounded"
+              >
+                Set Status
+              </button>
+              <button
+                onClick={() => setDetailVisibility((prev) => !prev)}
+                className="px-2 py-0.5 bg-orange-500 rounded"
+              >
+                Detail
+              </button>
+            </div>
+          </td>
+        </tr>
+      );
+    });
 
   return (
     <div className="p-5 flex flex-col gap-y-6">
@@ -31,38 +71,7 @@ export default function ContainerOrder() {
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td className="border-2 border-black text-center p-1">1</td>
-            <td className="border-2 border-black text-center p-1">Wirawan</td>
-            <td className="border-2 border-black text-center p-1">
-              5 juni 2004
-            </td>
-            <td className="border-2 border-black text-center p-1">Dikirim</td>
-            <td className="border-2 border-black text-center p-1">
-              Rp 1.400.000
-            </td>
-            <td className="border-2 border-black p-1">
-              <div className="flex justify-around">
-                <button className="px-2 py-0.5 bg-red-500 rounded">
-                  Hapus
-                </button>
-                <button
-                  onClick={() => setStatusVisibility((prev) => !prev)}
-                  className="px-2 py-0.5 bg-emerald-500 rounded"
-                >
-                  Set Status
-                </button>
-                <button
-                  onClick={() => setDetailVisibility((prev) => !prev)}
-                  className="px-2 py-0.5 bg-orange-500 rounded"
-                >
-                  Detail
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{displayDelivers}</tbody>
       </table>
 
       <DeleteConfirmation
