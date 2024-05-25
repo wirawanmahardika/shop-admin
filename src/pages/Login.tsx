@@ -4,16 +4,25 @@ import {
   ActionFunctionArgs,
   useActionData,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { myAxios } from "../helper/axios";
+import { useEffect } from "react";
 
 export default function Login() {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const loginData = useActionData() as {
     status: number;
     message: string;
     place: string;
   };
+
+  useEffect(() => {
+    myAxios.get("/api/users/getme").then(() => {
+      navigate("/");
+    });
+  }, []);
 
   return (
     <>
