@@ -1,8 +1,11 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useReducer, useState } from "react";
 import useFetchGet from "../../hooks/useFetchGet";
 import dayjs from "dayjs";
+import { myAxios } from "../../helper/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ContainerOrder() {
+  const [orderState, dispatch] = useReducer(orderReducer, { id_penjualan: 0 });
   const [statusVisibility, setStatusVisibility] = useState(false);
   const [detailVisibility, setDetailVisibility] = useState(false);
   const delivers = useFetchGet("/api/penjualan");
@@ -25,16 +28,24 @@ export default function ContainerOrder() {
           <td className="border-2 border-black text-center p-1">Rp {price}</td>
           <td className="border-2 border-black p-1">
             <div className="flex justify-around">
-              <button className="px-2 py-0.5 bg-red-500 rounded">Hapus</button>
+              <button className="px-2 py-0.5 font-normal bg-red-500">
+                Hapus
+              </button>
               <button
-                onClick={() => setStatusVisibility((prev) => !prev)}
-                className="px-2 py-0.5 bg-emerald-500 rounded"
+                onClick={() => {
+                  setStatusVisibility((prev) => !prev);
+                  dispatch({
+                    type: "set",
+                    payload: { id_penjualan: d.id_penjualan },
+                  });
+                }}
+                className="px-2 py-0.5 font-normal bg-green-500"
               >
                 Set Status
               </button>
               <button
                 onClick={() => setDetailVisibility((prev) => !prev)}
-                className="px-2 py-0.5 bg-orange-500 rounded"
+                className="px-2 py-0.5 font-normal bg-sky-500"
               >
                 Detail
               </button>
@@ -74,9 +85,10 @@ export default function ContainerOrder() {
         <tbody>{displayDelivers}</tbody>
       </table>
 
-      <DeleteConfirmation
+      <SetStatusAndDeleteConfirmation
         visible={statusVisibility}
         setVisibility={setStatusVisibility}
+        id_penjualan={orderState.id_penjualan}
       />
 
       <DetailComp
@@ -87,13 +99,28 @@ export default function ContainerOrder() {
   );
 }
 
-function DeleteConfirmation({
+function SetStatusAndDeleteConfirmation({
+  id_penjualan,
   visible,
   setVisibility,
 }: {
+  id_penjualan?: number;
   visible: boolean;
   setVisibility: Dispatch<SetStateAction<boolean>>;
 }) {
+  const navigate = useNavigate();
+  const handleSetOrder = (status: "dikirim" | "pengemasan" | "sampai") => {
+    myAxios
+      .patch(
+        "/api/penjualan/status/" + id_penjualan,
+        { status },
+        { withCredentials: true }
+      )
+      .then(() => {
+        navigate(0);
+      });
+  };
+
   return (
     <>
       <div
@@ -124,11 +151,30 @@ function DeleteConfirmation({
 
         <span className="text-center font-bold text-2xl">Set Status Ke</span>
         <div className="flex gap-x-6">
-          <button className="px-4 py-1 bg-red-500 rounded">Pengemasan</button>
-          <button className="px-4 py-1 bg-orange-500 rounded">
-            Pengiriman
+          <button
+            onClick={() => {
+              handleSetOrder("pengemasan");
+            }}
+            className="px-4 py-1 bg-red-500"
+          >
+            Pengemasan
           </button>
-          <button className="px-4 py-1 bg-emerald-500 rounded">Diterima</button>
+          <button
+            onClick={() => {
+              handleSetOrder("dikirim");
+            }}
+            className="px-4 py-1 bg-orange-500"
+          >
+            Dikirim
+          </button>
+          <button
+            onClick={() => {
+              handleSetOrder("sampai");
+            }}
+            className="px-4 py-1 bg-emerald-500"
+          >
+            Sampai
+          </button>
         </div>
       </div>
     </>
@@ -225,4 +271,23 @@ function DetailComp({
       </div>
     </>
   );
+}
+
+type orderType = {
+  id_penjualan: number;
+};
+
+type orderAction = {
+  type: "set";
+  payload: orderType;
+};
+
+function orderReducer(state: orderType, action: orderAction) {
+  switch (action.type) {
+    case "set":
+      state.id_penjualan = action.payload.id_penjualan;
+      return state;
+    default:
+      return state;
+  }
 }
