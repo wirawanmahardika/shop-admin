@@ -2,6 +2,8 @@ import useFetchGet from "../../hooks/useFetchGet";
 
 export default function LihatItems() {
   const items = useFetchGet("/api/items/get-all");
+  console.log(items);
+
   return (
     <div className="w-full p-5 grid grid-cols-3 gap-5 overflow-y-auto ">
       <span className="col-span-3 font-bold text-5xl text-center">Items</span>

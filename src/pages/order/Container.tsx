@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function ContainerOrder() {
   const [orderState, dispatch] = useReducer(orderReducer, { id_penjualan: 0 });
+  // const [idPenjualanForDetail, setIdPenjualanForDetail] = useState<number>(0);
+  const [detailItemTerjual, setDetailItemTerjual] = useState<any>();
   const [statusVisibility, setStatusVisibility] = useState(false);
   const [detailVisibility, setDetailVisibility] = useState(false);
   const delivers = useFetchGet("/api/penjualan");
+  console.log(delivers);
 
   const displayDelivers =
     delivers &&
@@ -44,7 +47,13 @@ export default function ContainerOrder() {
                 Set Status
               </button>
               <button
-                onClick={() => setDetailVisibility((prev) => !prev)}
+                onClick={() => {
+                  const targetDeliver = delivers?.find(
+                    (td) => td.id_penjualan === d.id_penjualan
+                  );
+                  setDetailItemTerjual(targetDeliver.item_terjual);
+                  setDetailVisibility((prev) => !prev);
+                }}
                 className="px-2 py-0.5 font-normal bg-sky-500"
               >
                 Detail
@@ -94,6 +103,7 @@ export default function ContainerOrder() {
       <DetailComp
         visible={detailVisibility}
         setVisibility={setDetailVisibility}
+        itemTerjual={detailItemTerjual}
       />
     </div>
   );
@@ -182,12 +192,28 @@ function SetStatusAndDeleteConfirmation({
 }
 
 function DetailComp({
+  itemTerjual,
   visible,
   setVisibility,
 }: {
+  itemTerjual: any;
   visible: boolean;
   setVisibility: Dispatch<SetStateAction<boolean>>;
 }) {
+  const displayItemTerjual = itemTerjual?.map((i: any) => {
+    return (
+      <div key={i.id} className="flex justify-between w-full items-center">
+        <img src={i.photo_item} alt="baju" className="w-1/4" />
+        <div className="flex flex-col gap-y-3">
+          <span className="font-bold text-xl">
+            {i.name} (x{i.quantity})
+          </span>
+          <span className="text-center font-bold">Rp {i.price}</span>
+        </div>
+      </div>
+    );
+  });
+
   return (
     <>
       <div
@@ -217,57 +243,7 @@ function DetailComp({
         </svg>
 
         <span className="font-bold text-4xl text-center">Detail</span>
-        <div className="flex flex-col gap-y-5">
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <img src="/img/baju.png" alt="baju" className="w-1/4" />
-            <div className="flex flex-col gap-y-3">
-              <span>Baju Adidas (x2)</span>
-              <span>Rp 300.000</span>
-            </div>
-          </div>
-        </div>
+        <div className="flex flex-col gap-y-5">{displayItemTerjual}</div>
       </div>
     </>
   );
