@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useReducer, useState } from "react";
+import {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useReducer,
+  useState,
+} from "react";
 import useFetchGet from "../../hooks/useFetchGet";
 import dayjs from "dayjs";
 import { myAxios } from "../../helper/axios";
@@ -11,7 +17,6 @@ export default function ContainerOrder() {
   const [statusVisibility, setStatusVisibility] = useState(false);
   const [detailVisibility, setDetailVisibility] = useState(false);
   const delivers = useFetchGet("/api/penjualan");
-  console.log(delivers);
 
   const displayDelivers =
     delivers &&
@@ -204,8 +209,8 @@ function DetailComp({
 }) {
   const displayItemTerjual = itemTerjual?.map((i: any) => {
     return (
-      <div key={i.id} className="flex justify-between w-full items-center">
-        <img src={i.photo_item} alt="baju" className="w-1/4" />
+      <Fragment key={i.id_item}>
+        <img src={i.photo_item} alt="baju" className="w-1/2" />
         <div className="flex flex-col gap-y-3">
           <span className="font-bold text-xl">
             {i.name} (x{i.quantity})
@@ -214,7 +219,7 @@ function DetailComp({
             Rp {numberWithDot(i.price)}
           </span>
         </div>
-      </div>
+      </Fragment>
     );
   });
 
@@ -247,7 +252,9 @@ function DetailComp({
         </svg>
 
         <span className="font-bold text-4xl text-center">Detail</span>
-        <div className="flex flex-col gap-y-5">{displayItemTerjual}</div>
+        <div className="grid grid-cols-2 gap-y-5 justify-items-center items-center">
+          {displayItemTerjual}
+        </div>
       </div>
     </>
   );
