@@ -1,13 +1,25 @@
+import { useEffect, useState } from "react";
+import { myAxios } from "../helper/axios";
+
 export default function Home() {
+  const customers = useGetAmountOfEntity("/api/users/count");
+  const categories = useGetAmountOfEntity("/api/category/count");
+  const brands = useGetAmountOfEntity("/api/brands/count");
+  const items = useGetAmountOfEntity("/api/items/count");
+
   return (
     <main className="p-3 flex flex-col w-full gap-y-8 bg-slate-300 min-h-screen">
       <div className="w-full space-y-5 bg-white p-5 rounded">
         <span className="font-bold text-4xl">Entities</span>
         <div className="flex justify-between w-full">
-          <BoxOfEntity tipe="customer" jumlah={6} color="bg-red-600" />
-          <BoxOfEntity tipe="item" jumlah={6} color="bg-emerald-600" />
-          <BoxOfEntity tipe="brand" jumlah={6} color="bg-blue-600" />
-          <BoxOfEntity tipe="category" jumlah={6} color="bg-orange-600" />
+          <BoxOfEntity tipe="customer" jumlah={customers} color="bg-red-600" />
+          <BoxOfEntity
+            tipe="category"
+            jumlah={categories}
+            color="bg-orange-600"
+          />
+          <BoxOfEntity tipe="brand" jumlah={brands} color="bg-blue-600" />
+          <BoxOfEntity tipe="item" jumlah={items} color="bg-emerald-600" />
         </div>
       </div>
       <div className="w-full space-y-5 bg-white p-5 rounded">
@@ -55,3 +67,20 @@ function BoxOfEntity({
     </div>
   );
 }
+
+const useGetAmountOfEntity = (url: string) => {
+  const [data, setData] = useState<number>(0);
+
+  useEffect(() => {
+    myAxios
+      .get(url)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return data;
+};
