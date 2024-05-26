@@ -1,11 +1,36 @@
 import { useEffect, useState } from "react";
 import { myAxios } from "../helper/axios";
+import useFetchGet from "../hooks/useFetchGet";
+import numberWithDot from "../helper/numberWithCommas";
+import dayjs from "dayjs";
 
 export default function Home() {
   const customers = useGetAmountOfEntity("/api/users/count");
   const categories = useGetAmountOfEntity("/api/category/count");
   const brands = useGetAmountOfEntity("/api/brands/count");
   const items = useGetAmountOfEntity("/api/items/count");
+
+  const delivers = useFetchGet("/api/penjualan");
+  const displayIncomingOrder = delivers?.map((d, i) => {
+    const price = d.item_terjual.reduce((a: number, b: any) => a + b.price, 0);
+    return (
+      <tr key={d.id_penjualan}>
+        <td className="border-2 border-black text-center">{i + 1}</td>
+        <td className="border-2 border-black text-center">
+          {d.users.username}
+        </td>
+        <td className="border-2 border-black text-center">
+          {dayjs(d.tanggal_beli).format("D-M-YY")}
+        </td>
+        <td className="border-2 border-black text-center">
+          {d.item_terjual.length}
+        </td>
+        <td className="border-2 border-black text-center">
+          Rp {numberWithDot(price)}
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <main className="p-3 flex flex-col w-full gap-y-8 bg-slate-300 min-h-screen">
@@ -34,15 +59,7 @@ export default function Home() {
               <th className="border-2 border-black">Total</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td className="border-2 border-black text-center">1</td>
-              <td className="border-2 border-black text-center">Wirawan</td>
-              <td className="border-2 border-black text-center">5-6-2004</td>
-              <td className="border-2 border-black text-center">2</td>
-              <td className="border-2 border-black text-center">Rp 400.000</td>
-            </tr>
-          </tbody>
+          <tbody>{displayIncomingOrder}</tbody>
         </table>
       </div>
     </main>
